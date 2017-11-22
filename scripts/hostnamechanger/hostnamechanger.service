@@ -1,0 +1,10 @@
+[Unit]
+Description=Changes hostname at startup
+Wants=local-fs.target
+After=local-fs.target
+
+[Service]
+ExecStart=/usr/bin/hostnamechanger
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,91 @@
+\documentclass[12pt]{article}
+
+\input{settings}
+\input{glossary}
+
+\addbibresource{literature.bib}
+
+\begin{document}
+
+\renewcommand\refname{Quellenverzeichnis}
+
+\title{\academictitle}
+\author{\academicauthor}
+\date{\today}
+
+\begin{titlepage}
+  \begin{center}
+    \huge \textbf{\textsf{Wissenschaftliche Arbeit}} \\
+    \vspace{2cm}
+    \LARGE\textbf{\textsc{\academictitle}}\\
+    \vspace{4cm}
+    \large \textbf{Ort}\\
+    \vspace{3cm}
+  \end{center}
+  \normalsize{
+    \begin{tabular}{l p{1cm} l}
+      \textbf{Name:} & & {\academicauthor} \\
+      \textbf{Matrikelnummer:} & & {Nummer} \\
+      \textbf{Fachbereich:} & & Fachbereich\\
+      \textbf{Studiengang:} & & Studiengang\\
+      \textbf{Fachsemester:} & & Semester\\
+      \textbf{Professor:} & & Professor
+    \end{tabular}\\
+  }
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Einleitung}
+
+Hier werden die beiden Quellen \cite{Ubuntu2015} und \cite{Fischer2014} für die Anzeige des Quellenverzeichnis zitiert.\\
+\\
+Hier wird der Eintrag \gls{wort} für die Anzeige des Glossars referenziert.\\
+\\
+Hier wird die Abbildung \ref{fig:ubuntu} für die Anzeige des Abbildungsverzeichnis referenziert. \\
+\\
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\textwidth]{ubuntu.png}
+  \caption{Ubuntu}
+  \label{fig:ubuntu}
+\end{figure}
+
+\subsection{Motivation}
+
+\subsection{Zielsetzung}
+
+\newpage
+\section{Grundlagen}
+
+\newpage
+\section{Analyse}
+
+\subsection{Anforderungen}
+
+\newpage
+\section{Entwurf}
+
+\newpage
+\section{Implementierung}
+
+\newpage
+\section{Schlussbetrachtung}
+
+\subsection{Ergebnis}
+
+\subsection{Ausblick}
+
+\subsection{Fazit}
+
+\newpage
+\printglossary[title=Glossar, toctitle=Glossar]
+
+\newpage
+\listoffigures
+
+\newpage
+\printbibliography[title=Quellenverzeichnis,heading=bibintoc]
+
+\end{document}

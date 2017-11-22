@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Issue: https://github.com/sbt/sbt/issues/3240
+# Bug:   java.lang.NumberFormatException: For input string: "0x100"
+# Fix:   export TERM=xterm-color
+
+executable="/usr/share/sbt/bin/sbt"
+
+export TERM=xterm-color
+
+$executable "$@"

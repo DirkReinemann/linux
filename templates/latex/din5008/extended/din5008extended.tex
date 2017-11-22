@@ -1,0 +1,68 @@
+\documentclass[a4paper,11pt]{letter}
+\usepackage[left=2.5cm, right=1cm, top=2.7cm, bottom=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[ngerman]{translator}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{color}
+\usepackage{datetime}
+\newdateformat{germandate}{\twodigit{\THEDAY}.\twodigit{\THEMONTH}.\THEYEAR}
+
+\thispagestyle{empty}
+
+\begin{document}
+
+\noindent
+\parbox[t][45mm]{80mm}{
+  {\footnotesize Absender, Straße, Hausnummer, Postleitzahl, Ort}\\
+  \\
+  \\
+  \\
+  Unternehmen\\
+  Ansprechpartner\\
+  Straße und Hausnummer\\
+  Postleitzahl und Ort\\
+}
+\hspace{16mm}
+\parbox[t][60mm]{75mm}{
+  \vspace{3mm}
+  \begin{tabular}{l l}
+  Ihr Zeichen: & \\
+  Ihre Nachricht: & \\
+  Unser Zeichen: & \\
+  Unsere Nachricht: & \\
+  &\\
+  Name: & \\
+  Telefon: & \\
+  Telefax: & \\
+  E-Mail: & \\
+  &\\
+  Datum: & \germandate\today\\
+  \end{tabular}
+}
+\noindent
+\parbox[t]{165mm}{
+\vspace{5mm}
+\textbf{Betreff}\\
+\\
+\\
+Sehr geehrte Damen und Herren,\\
+\\
+lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tempus facilisis gravida. Duis auctor nisl a nisi consequat dapibus. Morbi sed 
+turpis blandit, sollicitudin augue ut, fringilla massa. Morbi eleifend nec lacus nec auctor. Pellentesque ultricies finibus pretium. Phasellus sit 
+amet turpis ligula. Aenean lobortis id mauris ut porttitor. Suspendisse tincidunt nunc massa, sit amet molestie nibh vehicula id. Fusce vitae interdum 
+enim. Proin varius, tellus quis tincidunt scelerisque, nulla leo vulputate risus, viverra ullamcorper mi tellus et est. Vestibulum non odio quis ipsum 
+rhoncus fermentum sed eget felis. \\
+\\
+Mit freundlichen Grüßen,\\
+\\
+\\
+\\
+Absender\\
+\\
+\textbf{Anlagen}\\
+1 Anlage
+}
+
+\end{document}

@@ -1,0 +1,3 @@
+if [ "$reason" == "PREINIT" ]; then
+    /usr/bin/macchanger -r $interface
+fi

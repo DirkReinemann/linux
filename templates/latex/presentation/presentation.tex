@@ -1,0 +1,69 @@
+\documentclass{beamer}
+
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{datetime}
+\usepackage{etoolbox}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+
+\renewcommand{\baselinestretch}{1.5}
+
+\usetheme{default}
+\usecolortheme{beaver}
+
+\newdateformat{germandate}{\twodigit{\THEDAY}.\twodigit{\THEMONTH}.\THEYEAR}
+
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamertemplate{subsection in toc}[subsections numbered]
+\setbeamersize{text margin left=5pt,text margin right=5pt}
+
+\newcounter{sectioncounter}
+\setcounter{sectioncounter}{0}
+
+\newcommand{\seccnt}{%
+  \stepcounter{sectioncounter}%
+  \thesectioncounter
+}
+
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\inserttitle
+  \end{beamercolorbox}}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \insertframenumber{} / \inserttotalframenumber
+  \end{beamercolorbox}%
+  \vskip0pt%
+}
+
+\title{Title}
+\subtitle{Subtitle}
+\author{Author}
+\date{\germandate\today}
+
+\begin{document}
+\maketitle
+
+\begin{frame}
+ \frametitle{Table of Contents}
+ \tableofcontents
+\end{frame}
+
+\section{Sheet}
+\begin{frame}
+  \frametitle{\seccnt. Sheet}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    \LARGE{Many thanks for your attention! }
+  \end{center}
+\end{frame}
+
+\end{document}

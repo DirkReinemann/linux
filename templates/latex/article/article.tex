@@ -1,0 +1,112 @@
+
+\documentclass{article}
+
+% document properties
+\usepackage[left=2.41cm, right=2cm, top=2.7cm, bottom=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[ngerman]{translator}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{setspace}\onehalfspacing
+
+\renewcommand*{\familydefault}{\sfdefault}
+
+\def \articletitle {Titel}
+\def \articleauthor {Autor}
+
+% pdf properties
+\usepackage{hyperref}
+\hypersetup{
+    pdftitle={\articletitle},
+    pdfauthor={\articleauthor},
+    pdfsubject={\articletitle},
+    pdfkeywords={\articletitle},
+    hidelinks,
+}
+
+% create german date format
+\usepackage{datetime}
+\newdateformat{germandate}{\twodigit{\THEDAY}.\twodigit{\THEMONTH}.\THEYEAR}
+
+% cutom header and footer
+\usepackage{scrpage2}
+\pagestyle{scrheadings}
+\renewcommand{\footfont}{\itshape}
+\clearscrheadfoot
+\ihead{\articletitle}
+\ohead{\germandate\today}
+\ifoot{\articleauthor}
+\ofoot{\pagemark}
+
+% custom caption for listings
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\renewcommand\lstlistingname{Auflistung}
+\renewcommand\lstlistlistingname{Auflistung}
+
+\definecolor{intellijgreen}{RGB}{0,128,0}
+\definecolor{intellijgray}{RGB}{128,128,128}
+\definecolor{intellijblue}{RGB}{0,0,128}
+
+% default settings for code listings
+\lstset{
+  frame=none,
+  language=Bash,
+  showstringspaces=false,
+  columns=flexible,
+  xleftmargin=20pt,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\color{black},
+  keywordstyle=\color{intellijblue},
+  commentstyle=\color{intellijgray},
+  stringstyle=\color{intellijgreen},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=2
+}
+
+\title{\articletitle}
+\author{\articleauthor}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  Das ist die Zusammenfassung des Artikels.
+\end{abstract}
+
+\newpage
+
+\tableofcontents
+\newpage
+
+\section{Kapitel}
+
+\begin{tabularx}{\textwidth}{|l|X|} \hline
+  \textbf{Spalte 1} & \textbf{Spalte 2}  \\ \hline
+  Inhalt 1 der Spalte 1 & Inhalt 1 der Spalte 2 \\ \hline
+  Inhalt 2 der Spalte 1 & Inhalt 2 der Spalte 2 \\ \hline
+\end{tabularx}
+
+\subsection{Unterkapitel}
+
+\begin{lstlisting}[label=listing label,caption=listing caption]
+  Inhalt der Auflistung
+\end{lstlisting}
+
+\section{Quellen}
+
+\begin{enumerate}
+ \item \url{https://duckduckgo.com}
+\end{enumerate}
+
+\end{document}

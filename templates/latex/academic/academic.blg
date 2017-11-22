@@ -1,0 +1,15 @@
+[0] Config.pm:325> INFO - This is Biber 2.1
+[0] Config.pm:328> INFO - Logfile is 'academic.blg'
+[33] biber:276> INFO - === Sa Nov 21, 2015, 15:45:28
+[33] Biber.pm:334> INFO - Reading 'academic.bcf'
+[114] Biber.pm:646> INFO - Found 2 citekeys in bib section 0
+[126] Biber.pm:2978> INFO - Processing section 0
+[138] Biber.pm:3116> INFO - Looking for bibtex format file 'literature.bib' for section 0
+[138] bibtex.pm:1010> INFO - Decoding LaTeX character macros into UTF-8
+[139] bibtex.pm:884> INFO - Found BibTeX data source 'literature.bib'
+[175] UCollate.pm:66> INFO - Overriding locale 'de' defaults 'variable = shifted' with 'variable = non-ignorable'
+[175] UCollate.pm:66> INFO - Overriding locale 'de' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[175] Biber.pm:2855> INFO - Sorting list 'nty' of type 'entry' with scheme 'nty' and locale 'de'
+[176] Biber.pm:2859> INFO - No sort tailoring available for locale 'de'
+[178] bbl.pm:505> INFO - Writing 'academic.bbl' with encoding 'UTF-8'
+[178] bbl.pm:596> INFO - Output to academic.bbl

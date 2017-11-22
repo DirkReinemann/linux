@@ -1,0 +1,108 @@
+\usepackage[left=2.41cm, right=2cm, top=2.7cm, bottom=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[ngerman]{translator}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{enumitem}
+\usepackage{textpos}
+\usepackage{ragged2e}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{url}
+% euro symbol
+\usepackage{eurosym}
+% use procentual table column width
+\usepackage{tabularx}
+% use sans-serif font
+\renewcommand*{\familydefault}{\sfdefault}
+% load glossary and add it to table of references
+\usepackage[toc,nonumberlist]{glossaries}
+\makeglossaries
+%  bibliografie with biblatex and biber
+\usepackage[style=numeric, backend=biber, sortlocale=de]{biblatex}
+\usepackage[autostyle]{csquotes}
+\usepackage[nottoc]{tocbibind}
+% line spacing
+\usepackage{setspace}\onehalfspacing
+
+\def \academictitle {Titel}
+\def \academicauthor {Autor}
+
+% create german date format
+\usepackage{datetime}
+\newdateformat{mytoday}{\twodigit{\THEDAY}.\twodigit{\THEMONTH}.\THEYEAR}
+
+% cutom header and footer
+\usepackage{fancyhdr}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[RE,LO]{\nouppercase\leftmark}
+\fancyhead[LE,RO]{\mytoday\today}
+\fancyfoot[RE,LO]{\academicauthor}
+\fancyfoot[LE,RO]{\thepage}
+\renewcommand\sectionmark[1]{\markboth{#1}{}}
+
+% custom caption for listings
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\renewcommand\lstlistingname{Auflistung}
+\renewcommand\lstlistlistingname{Auflistung}
+
+% scala source code listing
+\lstdefinelanguage{Scala}{
+  morekeywords={abstract,case,catch,class,def,%
+    do,else,extends,false,final,finally,%
+    for,if,implicit,import,match,mixin,%
+    new,null,object,override,package,%
+    private,protected,requires,return,sealed,%
+    super,this,throw,trait,true,try,%
+    type,val,var,while,with,yield},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[n]{/*}{*/},
+  morestring=[b]",
+  morestring=[b]',
+  morestring=[b]"""
+}
+
+\definecolor{intellijgreen}{RGB}{0,128,0}
+\definecolor{intellijgray}{RGB}{128,128,128}
+\definecolor{intellijblue}{RGB}{0,0,128}
+
+% default settings for code listings
+\lstset{
+  frame=none,
+  language=Scala,
+  showstringspaces=false,
+  columns=flexible,
+  xleftmargin=20pt,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\color{black},
+  keywordstyle=\color{intellijblue},
+  commentstyle=\color{intellijgray},
+  stringstyle=\color{intellijgreen},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=2
+}
+
+% pdf properties
+\usepackage{hyperref}
+\hypersetup{
+    pdftitle={\academictitle},
+    pdfauthor={\academicauthor},
+    pdfsubject={\academictitle},
+    pdfkeywords={\academictitle},
+    hidelinks,
+}

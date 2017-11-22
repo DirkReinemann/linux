@@ -1,0 +1,11 @@
+[Unit]
+Description=Cleans history files
+
+[Service]
+Type=oneshot
+ExecStart=/bin/true
+ExecStop=/usr/bin/cleanhistory -cjps
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

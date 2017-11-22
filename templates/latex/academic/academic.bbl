@@ -1,0 +1,65 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.5 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \sortlist{nty}{nty}
+    \entry{Ubuntu2015}{online}{}
+      \name{author}{1}{}{%
+        {{hash=c2e70fbae5f95506396162dab6617978}{Canonical}{C\bibinitperiod}{}{}{}{}{}{}}%
+      }
+      \strng{namehash}{c2e70fbae5f95506396162dab6617978}
+      \strng{fullhash}{c2e70fbae5f95506396162dab6617978}
+      \field{sortinit}{C}
+      \field{sortinithash}{59f25d509f3381b07695554a9f35ecb2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{The leading OS for PC, tablet, phone and cloud | Ubuntu}
+      \field{urlday}{01}
+      \field{urlmonth}{01}
+      \field{urlyear}{2015}
+      \field{year}{2015}
+      \verb{url}
+      \verb http://www.ubuntu.com/
+      \endverb
+    \endentry
+    \entry{Fischer2014}{book}{}
+      \name{author}{1}{}{%
+        {{hash=589217129816269e7a8e349b980af4b2}{Fischer}{F\bibinitperiod}{Marcus}{M\bibinitperiod}{}{}{}{}}%
+      }
+      \list{location}{1}{%
+        {Bonn}%
+      }
+      \list{publisher}{1}{%
+        {Galileo Press GmbH}%
+      }
+      \strng{namehash}{589217129816269e7a8e349b980af4b2}
+      \strng{fullhash}{589217129816269e7a8e349b980af4b2}
+      \field{sortinit}{F}
+      \field{sortinithash}{c6a7d9913bbd7b20ea954441c0460b78}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{8. Auflage}
+      \field{isbn}{978-3-836-22960-9}
+      \field{title}{Ubuntu 14.04 LTS - Aktuell zu »Trusty Tahr«}
+      \field{year}{2014}
+    \endentry
+  \endsortlist
+\endrefsection
+\endinput
+

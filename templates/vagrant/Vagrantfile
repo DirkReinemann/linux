@@ -1,0 +1,35 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  # box image
+  config.vm.box = "ubuntu/xenial64"
+
+  # hostname
+  config.vm.hostname = "vagrant"
+
+  # forward port 
+  config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  # shared directory
+  config.vm.synced_folder "shared", "/shared"
+
+  # virtualbox settings
+  config.vm.provider "virtualbox" do |vb|  
+    vb.memory = "1024"
+  end
+  
+  # shell povisioning
+  config.vm.provision "shell", inline: <<-SHELL
+     apt-get update
+     apt-get install -y htop
+  SHELL
+
+  # ansible provisioning
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "playbook.yml"
+  end
+
+  # file provisioning
+  config.vm.provision "file", source: "configfile", destination: "configfile"  
+end
