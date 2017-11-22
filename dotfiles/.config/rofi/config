@@ -1,0 +1,8 @@
+rofi.terminal:          /usr/bin/terminator
+rofi.ssh-command:       {terminal} -x {ssh-client} {host}
+rofi.color-enabled:     true
+rofi.color-normal:      #353945,#ffffff,#353945,#353945,#4084D6
+rofi.color-urgent:      #353945,#ffffff,#353945,#353945,#4084D6
+rofi.color-active:      #353945,#ffffff,#353945,#353945,#4084D6
+rofi.color-window:      #353945,#ffffff
+rofi.separator-style:   solid

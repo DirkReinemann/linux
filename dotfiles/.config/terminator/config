@@ -1,0 +1,28 @@
+[global_config]
+  always_split_with_profile = True
+  title_inactive_bg_color = "#353945"
+  title_inactive_fg_color = "#ffffff"
+  title_receive_bg_color = "#4084d6"
+  title_transmit_bg_color = "#cc0000"
+[keybindings]
+  go_down = <Primary>Down
+  go_left = <Primary>Left
+  go_right = <Primary>Right
+  go_up = <Primary>Up
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]
+[profiles]
+  [[default]]
+    copy_on_selection = True
+    cursor_color = "#ffffff"
+    font = Monospace 10
+    foreground_color = "#ffffff"
+    scrollback_lines = 10000
+    use_system_font = False

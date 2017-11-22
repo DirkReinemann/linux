@@ -1,0 +1,15 @@
+[user]
+    name = Dirk Reinemann
+    email = dirk.reinemann@gmx.de
+[core]
+    excludesfile = ~/.gitignore
+[credential]
+    helper = cache cache --timeout=3600
+[gc]
+    autoDetach = false
+[diff]
+    tool = vimdiff
+[difftool]
+    prompt = false
+[alias]
+    d = difftool
