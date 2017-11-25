@@ -1,0 +1,16 @@
+# latex
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.glg
+*.glo
+*.gls
+*.ist
+*.lof
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.pdf
