@@ -1,0 +1,84 @@
+
+\documentclass{article}
+
+% document properties
+\usepackage[left=1cm, right=1cm, top=1cm, bottom=1cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[ngerman]{translator}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{setspace}\onehalfspacing
+\usepackage{multicol}
+\usepackage{xcolor,colortbl}
+
+\def \cheatsheettitle {CHEATSHEET}
+\def \cheatsheetauthor {Author}
+
+% pdf properties
+\usepackage{hyperref}
+\hypersetup{
+    pdftitle={\cheatsheettitle},
+    pdfauthor={\cheatsheetauthor},
+    pdfsubject={\cheatsheettitle},
+    pdfkeywords={\cheatsheettitle},
+    hidelinks,
+}
+
+\renewcommand*{\familydefault}{\sfdefault}
+
+\definecolor{red}{HTML}{d64d43}
+\definecolor{white}{HTML}{ffffff}
+
+\newcommand{\hseg}[1]{
+ \rowcolor{red}\multicolumn{2}{c}{\color{white}\textbf{#1}} \\
+}
+
+\newcommand{\cseg}[2]{
+ #1 & #2 \\
+}
+
+\newcommand{\eseg}{
+ &\\
+}
+
+\begin{document}
+
+\begin{center}
+ \color{red}\huge\textbf{\cheatsheettitle}
+\end{center}
+
+\begin{multicols*}{2}
+ \begin{tabularx}{\columnwidth}{l X}
+  \hseg{SECTION 1}
+  \cseg{command 1}{description 1}
+  \cseg{command 2}{description 2}
+  \eseg
+  \hseg{SECTION 2}
+  \cseg{command 1}{description 1}
+  \eseg
+  \hseg{SECTION 3}
+  \cseg{command 1}{description 1}
+  \cseg{command 2}{description 2}
+  \cseg{command 3}{description 3}
+  \cseg{command 4}{description 4}
+ \end{tabularx}
+
+ \columnbreak
+
+ \begin{tabularx}{\columnwidth}{l X}
+  \hseg{SECTION 4}
+  \cseg{command 1}{description 1}
+  \cseg{command 2}{description 2}
+  \cseg{command 3}{description 3}
+  \eseg
+  \hseg{SECTION 5}
+  \cseg{command 1}{description 1}
+ \end{tabularx}
+\end{multicols*}
+
+
+\end{document}
