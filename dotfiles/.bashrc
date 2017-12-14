@@ -14,6 +14,8 @@ PROMPT_COMMAND='printf "\e[01;30m[%03.0f] " "$?"'
 
 PS1='\[\033[01;32m\]\u\[\033[0m\]@\[\033[01;31m\]\h\[\033[0m\]:\[\033[01;33m\]\w\[\033[1;30m\]$(parse_git_branch)\n\[\033[0m\]$ '
 
+PATH="$PATH:/home/dirk/.gem/ruby/2.4.0/bin"
+
 export VISUAL=vi
 export EDITOR=vi
 export JAVA_HOME="/usr/lib/jvm/default"
@@ -46,8 +48,13 @@ alias ethupmac='sudo macchanger -r enp0s25 && sudo dhcpcd enp0s25'
 alias ethup='sudo dhcpcd enp0s25'
 alias ethdown='sudo killall dhcpcd && sudo macchanger -p enp0s25 && sudo ip addr flush dev enp0s25 && ip link set enp0s25 down'
 alias weather='curl wttr.in/berlin'
-alias bananapiwatchit='ssh -vL 8090:localhost:8090 bananapi'
+alias bananapisermonit='ssh -vL 8000:localhost:8000 bananapilocal'
 alias bananapibackupsync='rsync -avz --progress -e ssh bananapi:/root/backup/ /home/dirk/Backups/'
+alias bananapizuendstoff='ssh -vL 9000:localhost:9000 bananapilocal'
+alias odroidmusicmixsync='rsync -avz --delete --progress -e ssh /home/dirk/Music/Mix/ odroid:/home/alarm/Music/Music2/Mix/'
+alias odroidmusicdiversesync='rsync -avz --delete --progress -e ssh /home/dirk/Music/Diverse/ odroid:/home/alarm/Music/Music2/Diverse/'
+alias odroidmusicdrumnbasssync='rsync -avz --delete --progress -e ssh /home/dirk/Music/DrumNBass/ odroid:/home/alarm/Music/Music2/DrumNBass/'
+alias raspberrypimusicmixsync='rsync -avz --delete --progress -e ssh /home/dirk/Music/Mix/ raspberrypi:/home/alarm/Music/'
 alias publicip='printf "$(curl -s http://ipecho.net/plain)\n"'
 alias pinggoogle='ping 8.8.8.8'
 alias hcat='highlight -O ansi'
@@ -75,8 +82,17 @@ multiple_change_directory()
     C=0
     while [ $C -lt $1 ]; do
         cd ..
-        C=$(expr $C + 1)
+        C=$((C+1))
     done
+}
+
+grepall()
+{
+    if [ $# -ne 1 ]; then
+        echo "Usage: grepall [TERM]"
+    else
+        grep -ri "$1" *
+    fi
 }
 
 findall()
@@ -84,7 +100,7 @@ findall()
     if [ $# -ne 2 ]; then
         echo "Usage: findall [PATH] [TERM]"
     else
-        sudo find $1 -iname "*$2*"
+        find "$1" -iname "*$2*"
     fi
 }
 
@@ -93,8 +109,8 @@ copyisotodrive()
     if [ $# -ne 2 ]; then
         printf "Usage: copyisotodrive [ISO] [DRIVE]\n"
     else
-        if [ -f $1 ] && [ -b $2 ]; then
-            sudo dd if=$1 of=$2 status=progress && sync
+        if [ -f "$1" ] && [ -b "$2" ]; then
+            sudo dd if="$1" of="$2" status=progress && sync
         else
             printf "Either the given file doesn't exist or the drive is not available.\n"
         fi
@@ -106,8 +122,8 @@ runusbquemu()
     if [ $# -ne 1 ]; then
         printf "Usage: runusbqemu [USB]\n"
     else
-        if [ -b $1 ]; then
-            sudo qemu-system-x86_64 -m 4096 -enable-kvm -hda $1
+        if [ -b "$1" ]; then
+            sudo qemu-system-x86_64 -m 4096 -enable-kvm -hda "$1"
         else
             printf "The given usb drive was not found.\n"
         fi
@@ -131,14 +147,23 @@ startappnohup()
     if [ $# -lt 1 ]; then
         echo "Usage: startappnohup [APPLICATION] [PARAMETERS]"
     else
-        hash $1 > /dev/null 2>&1
+        hash "$1" > /dev/null 2>&1
         if [ $? -eq 0 ]; then
             DATEFORMAT=$(date +%Y-%m-%d-%H-%m-%S-%N)
             LOGFILE="/tmp/$1-$DATEFORMAT.log"
-            nohup $1 $2 > $LOGFILE 2>&1 &
+            nohup "$1" "$2" > "$LOGFILE" 2>&1 &
             echo "The application '$1' started with logfile '$LOGFILE'."
         else
             echo "The given application '$1' doesn't exists."
         fi
+    fi
+}
+
+zuendstoffbook()
+{
+    if [ $# -lt 1 ]; then
+        echo "Usage: zuendstoffbook [PDF]"
+    else
+        scp "$1" bananapilocal:/usr/share/zuendstoff/books
     fi
 }

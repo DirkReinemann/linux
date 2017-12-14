@@ -8,6 +8,7 @@ set laststatus=2
 set wildmenu
 set title
 set cursorline
+set autoread
 
 " search (highlight results, ignore case, search while typing, regex)
 set hlsearch
@@ -98,14 +99,14 @@ let g:syntastic_check_on_wq=0
 let g:syntastic_c_checkers=['cppcheck']
 
 " clang-complete configuration
-" let g:clang_library_path='/usr/lib'
-let g:clang_auto_select=1
+let g:clang_library_path='/usr/lib/libclang.so'
+let g:clang_auto_select=0
 let g:clang_snippets=1
 let g:clang_conceal_snippets=1
-let g:clang_user_options='-std=c++0x'
+let g:clang_user_options='-std=c11'
 let g:clang_complete_copen=1
 let g:clang_snippets_engine='clang_complete'
-" let g:clang_use_library=1
+let g:clang_use_library=1
 
 set concealcursor=inv
 set conceallevel=2
@@ -138,6 +139,8 @@ Plugin 'xolox/vim-misc'
 Plugin 'henrik/vim-indexed-search'
 Plugin 'ervandew/supertab'
 Plugin 'rip-rip/clang_complete'
+Plugin 'tpope/vim-commentary' 
+Plugin 'kien/ctrlp.vim'
 
 call vundle#end()
 filetype plugin indent on
