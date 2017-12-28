@@ -2,14 +2,14 @@
 
 usage()
 {
-    echo "Autostart script."
+    echo "autostart script."
     echo
     echo "Usage: $0 [Options]"
     echo
     echo "Options:"
-    printf "  %-20s %s\n" "-d" "disable sleep"
-    printf "  %-20s %s\n" "-x" "disable camera and touchpad"
-    printf "  %-20s %s\n" "-s" "update screenlayout scripts"
+    printf "  %-20s %s\\n" "-d" "disable sleep"
+    printf "  %-20s %s\\n" "-x" "disable camera and touchpad"
+    printf "  %-20s %s\\n" "-s" "update screenlayout scripts"
     exit 1
 }
 
@@ -20,40 +20,38 @@ dpmsconfig()
     sleep 1 && xset -dpms
 }
 
-getxinputid()
+disablexinput()
 {
-    xinput | grep $1 | grep -o 'id=[0-9]*' | grep -o '[0-9]*'
+    local id
+    id=$(xinput | grep "$1" | grep -o 'id=[0-9]*' | grep -o '[0-9]*')
+    if [ ! -z "$id" ]; then
+        xinput disable "$id"
+    fi
 }
-
 
 xinputconfig()
 {
-    xinput disable $(getxinputid "Camera")
-    xinput disable $(getxinputid "TouchPad")
+    disablexinput "Camera"
+    disablexinput "TouchPad"
 }
 
 screenlayoutconfig()
 {
-    local vga=$(xrandr | grep -o VGA[0-9])
-    local lvds=$(xrandr | grep -o LVDS[0-9])
+    local vga
+    local lvds
+    local layoutfile
+
+    vga=$(xrandr | grep -o 'VGA[0-9]')
+    lvds=$(xrandr | grep -o 'LVDS[0-9]')
 
     layoutdir="$HOME/.screenlayout"
-    layoutfiles=( Dual.sh Single.sh )
 
-    for layout in ${layoutfiles[@]}; do
-        layoutfile="$layoutdir/$layout"
-
-        if [ ! -f $layoutfile ]; then
-            echo "The layoutfile '$layoutfile' doesn't exist."
-        else
-            if [ ! -z $vga ]; then
-                sed -i "s/VGA[0-9]/$vga/" "$layoutfile"
-            fi
-
-            if [ ! -z $LVDS ]; then
-                sed -i "s/LVDS[0-9]/$LVDS/" "$layoutfile"
-            fi
-
+    for layoutfile in $layoutdir/*.sh; do
+        if [ ! -z "$vga" ]; then
+            sed -i "s/VGA[0-9]/$vga/" "$layoutfile"
+        fi
+        if [ ! -z "$lvds" ]; then
+            sed -i "s/LVDS[0-9]/$lvds/" "$layoutfile"
         fi
     done
 }
@@ -62,7 +60,7 @@ if [ $# == 0 ]; then
     usage
 fi
 
-while getopts "lb" opt; do
+while getopts "dxs" opt; do
     case $opt in
         d)
             dpmsconfig

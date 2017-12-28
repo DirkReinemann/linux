@@ -9,10 +9,10 @@ usage()
     echo "Usage: $0 [Options]"
     echo
     echo "Options:"
-    printf "  %-15s %s\n" "-l" "prints radio station list"
-    printf "  %-15s %s\n" "-x" "prints radio station xml"
-    printf "  %-15s %s\n" "-i [filename]" "inserts radio station xml in database and prints output"
-    printf "\n\n"
+    printf "  %-15s %s\\n" "-l" "prints radio station list"
+    printf "  %-15s %s\\n" "-x" "prints radio station xml"
+    printf "  %-15s %s\\n" "-i [filename]" "inserts radio station xml in database and prints output"
+    printf "\\n\\n"
     echo "Howto backup and restore rhythmbox radio stations:"
     echo
     echo "1. Print radio stations as xml and redirect the output to a file."
@@ -30,22 +30,22 @@ usage()
 plist()
 {
     xmlstarlet sel -t -m '//entry[@type="iradio"]' \
-    -v 'title' -o '|' \
-    -v 'location' \
-    -n $filename | \
-    awk -F'|' '{ printf "%2i. %-50s %s\n", NR, $1, $2 }'
+        -v 'title' -o '|' \
+        -v 'location' \
+        -n "$filename" | \
+        awk -F'|' '{ printf "%2i. %-50s %s\n", NR, $1, $2 }'
 }
 
 pxml()
 {
     xmlstarlet ed -d '/rhythmdb/entry[not(@type="iradio")]' \
-    -u '/rhythmdb/entry/play-count' -v '' \
-    -u '/rhythmdb/entry/last-played' -v '' \
-    -u '/rhythmdb/entry/bitrate' -v '' \
-    -u '/rhythmdb/entry/date' -v '' \
-    -u '/rhythmdb/entry/artist' -v '' \
-    -u '/rhythmdb/entry/album' -v '' \
-    $filename
+        -u '/rhythmdb/entry/play-count' -v '' \
+        -u '/rhythmdb/entry/last-played' -v '' \
+        -u '/rhythmdb/entry/bitrate' -v '' \
+        -u '/rhythmdb/entry/date' -v '' \
+        -u '/rhythmdb/entry/artist' -v '' \
+        -u '/rhythmdb/entry/album' -v '' \
+        "$filename"
 }
 
 phead()
@@ -62,22 +62,24 @@ ptail()
 
 pinsert()
 {
-    local infile=$1
-    if [ ! -f $infile ]; then
-        printf "The given file '$infile' doesn't exist.\n"
+    local entries infile output entry title location genre mediatype saveifs
+
+    infile="$1"
+    if [ ! -f "$infile" ]; then
+        printf "The given file '%s' doesn't exist.\\n" "$infile"
         exit 1
     fi
 
-    local entries=$(xmlstarlet sel -t -m '//entry[@type="iradio"]' \
+    entries=$(xmlstarlet sel -t -m '//entry[@type="iradio"]' \
         -v 'title' -o '|' \
         -v 'location' -o '|' \
         -v 'genre' -o '|' \
-    -v 'media-type' -n $infile)
-    
-    local output=$(cat $filename)
-    local entry title location genre mediatype
-    local saveifs=$IFS
-    IFS=$(echo -en "\n\b")
+        -v 'media-type' -n "$infile" \
+    )
+
+    output=$(cat "$filename")
+    saveifs=$IFS
+    IFS=$(echo -en "\\n\\b")
     for entry in $entries; do
         title=$(phead "$entry")
         entry=$(ptail "$entry")
@@ -91,7 +93,7 @@ pinsert()
         mediatype=$(phead "$entry")
         entry=$(ptail "$entry")
 
-        output="$(echo $output | xmlstarlet ed \
+        output="$(echo "$output" | xmlstarlet ed \
             -s '/rhythmdb' -t 'elem' -n 'entry' -v '' \
             -s '/rhythmdb/entry[not(@type)]' -t 'elem' -n 'title' -v "$title" \
             -s '/rhythmdb/entry[not(@type)]' -t 'elem' -n 'genre' -v "$genre" \
@@ -103,7 +105,8 @@ pinsert()
             -s '/rhythmdb/entry[not(@type)]' -t 'elem' -n 'bitrate' -v '' \
             -s '/rhythmdb/entry[not(@type)]' -t 'elem' -n 'date' -v '' \
             -s '/rhythmdb/entry[not(@type)]' -t 'elem' -n 'media-type' -v "$mediatype" \
-        -i '/rhythmdb/entry[not(@type)]' -t 'attr' -n 'type' -v 'iradio')"
+            -i '/rhythmdb/entry[not(@type)]' -t 'attr' -n 'type' -v 'iradio' \
+        )"
     done
     IFS=$saveifs
 
@@ -123,7 +126,7 @@ while getopts "lxi:" opt; do
             pxml
         ;;
         i)
-            pinsert $OPTARG
+            pinsert "$OPTARG"
         ;;
         \?)
             usage

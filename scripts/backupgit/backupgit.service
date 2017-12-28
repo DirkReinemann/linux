@@ -1,10 +1,10 @@
 [Unit]
-Description=Cleans history files
+Description=Backup files to git directory
 
 [Service]
 Type=oneshot
 ExecStart=/bin/true
-ExecStop=/usr/bin/cleanhistory -cjpo
+ExecStop=/usr/bin/backupgit -cbfrt
 RemainAfterExit=yes
 
 [Install]

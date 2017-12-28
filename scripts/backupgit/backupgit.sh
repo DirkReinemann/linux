@@ -1,7 +1,9 @@
 #!/bin/bash
 
 backupdir="$HOME/Projects/Private/private/backup"
-configfile="$HOME/.config/backupgit.cnf"
+backupconfig="$HOME/.config/backup.cnf"
+dotfiledir="$HOME/Projects/Private/linux/dotfiles"
+dotfileconfig="$HOME/.config/dotfile.cnf"
 
 usage()
 {
@@ -10,86 +12,209 @@ usage()
     echo "Usage: $0 [Options]"
     echo
     echo "Options:"
-    printf "  %-20s %s\n" "-l" "list backup files and directories"
-    printf "  %-20s %s\n" "-b" "backup files and directories"
+    printf "  %-20s %s\\n" "-l" "list backup files and directories"
+    printf "  %-20s %s\\n" "-b" "backup files and directories"
+    printf "  %-20s %s\\n" "-f" "backup firefox bookmarks"
+    printf "  %-20s %s\\n" "-r" "backup rhythmbox radio stations"
+    printf "  %-20s %s\\n" "-t" "backup thunderbird feeds"
+    printf "  %-20s %s\\n" "-c" "clean duplicates in configfile)"
+    printf "  %-20s %s\\n" "-d" "diff backup with system files"
     exit 1
 }
 
-list()
+blist()
 {
-    while read line; do
-        echo $line
-    done < $configfile
+    local line
+
+    echo "$1"
+    while read -r line; do
+        echo "$line"
+    done < "$2"
+    echo ""
 }
 
-backup()
+remove_homepath()
 {
-    if [ ! -d $backupdir ]; then
-        mkdir -p $backupdir && echo "The backup directory '$backupdir' was not found and therefore created."
+    printf "%s" "$line" | sed "s%$HOME/%%"
+}
+
+bfiles()
+{
+    local line
+
+    if [ ! -z "$3" ]; then
+        cd "$HOME" || exit 1
     fi
 
-    # backup files and directories from backupfile
-    while read line; do
-        rsync -avchR --delete --stats $line $backupdir
-    done < $configfile
+    printf "Backup entries from file '%s' to dir '%s' ... " "$2" "$1"
+    while read -r line; do
+        if [ -z "$3" ]; then
+            rsync -achqR --delete --stats "$line" "$1"
+        else
+            line="$(remove_homepath "$line")"
+            rsync -achqR --delete --stats "$line" "$1"
+        fi
+    done < "$2"
+    printf "done.\\n"
+}
 
-    # backup mozilla firefox bookmarks
-    local bookmarkdir=$(find $HOME/.mozilla/firefox -maxdepth 1 ! -path [PATH] -type d | grep 'default$' | head -1)/bookmarkbackups
-    local bookmarkdfile=$(ls -1 $bookmarkdir | sort -r | head -1)
+bdiff()
+{
+    local line
 
-    local bookmarkbackupdir="$backupdir$HOME/.mozilla/firefox"
-    if [ ! -d $bookmarkbackupdir ]; then
-        mkdir -p $bookmarkbackupdir
+    if [ ! -z "$4" ]; then
+        cd "$HOME" || exit 1
     fi
 
-    local bookmarkbackupfile=bookmarks.${bookmarkfile#*.}
-    cp -f $bookmarkdir/$bookmarkfile $bookmarkbackupdir/$bookmarkbackupfile
+    echo "$1"
+    while read -r line; do
+        if [ -z "$4" ]; then
+            diff -rq "$2$line" "$line"
+        else
+            line="$(remove_homepath "$line")"
+            diff -rq "$2/$line" "$line"
+        fi
+    done < "$3"
+    echo ""
+}
 
-    # backup thunderbird feed urls
-    local feeddir=$(find $HOME/.thunderbird -maxdepth 1 ! -path [PATH] -type d | grep 'default$' | head -1)/Mail/Feeds
-    local feedfile="$feeddir/feeds.rdf"
+bfirefox()
+{
+    local bookmarkdir bookmarkfile bookmarkbackupdir bookmarkbackupfile
+
+    bookmarkdir=$( \
+        find "$HOME/.mozilla/firefox" -maxdepth 1 -type d | \
+            grep 'default$' | \
+            head -1 \
+    )/bookmarkbackups
+
+    if [ -z "$bookmarkdir" ]; then
+        echo "Error while finding firefox directory."
+    fi
+
+    bookmarkfile=$(
+    find "$bookmarkdir" -maxdepth 1 -type f ! -path [] | \
+            sort -r | \
+            head -1 | \
+            xargs basename
+    )
+
+    bookmarkbackupdir="$backupdir$HOME/.mozilla/firefox"
+    if [ ! -d "$bookmarkbackupdir" ]; then
+        mkdir -p "$bookmarkbackupdir"
+    fi
+
+    bookmarkbackupfile=bookmarks.${bookmarkfile#*.}
+    if cp -f "$bookmarkdir/$bookmarkfile" "$bookmarkbackupdir/$bookmarkbackupfile"; then
+        echo "The file '$bookmarkbackupdir/$bookmarkbackupfile' was successfully created."
+    else
+        echo "Error while creating the file '$bookmarkbackupdir/$bookmarkbackupfile'."
+    fi
+}
+
+brhythmbox()
+{
+    if ! command -v rhythmboxhelper > /dev/null 2>&1; then
+        echo "The command rhythmboxhelper was not found."
+        exit 1
+    fi
+
+    local rhythmboxbackupdir="$backupdir$HOME/.local/share/rhythmbox"
+    local rhythmboxbackupfile="$rhythmboxbackupdir/rhythmdb.xml"
+
+    if [ ! -d "$rhythmboxbackupdir" ]; then
+        mkdir -p "$rhythmboxbackupdir"
+    fi
+
+    if rhythmboxhelper -x > "$rhythmboxbackupfile"; then
+        echo "The file '$rhythmboxbackupfile' was sucessfully created."
+    else
+        echo "Error while creating the file '$rhythmboxbackupfile'."
+    fi
+}
+
+bthunderbird()
+{
+    if ! command -v thunderbirdhelper > /dev/null 2>&1; then
+        echo "The command thunderbirdhelper was not found."
+        exit 1
+    fi
 
     local feedbackupdir="$backupdir$HOME/.thunderbird"
-    if [ ! -d $feedbackupdir ]; then
-        mkdir -p $feedbackupdir
+    local feedbackupfile="$feedbackupdir/feeds.opml"
+
+    if [ ! -d "$feedbackupdir" ]; then
+        mkdir -p "$feedbackupdir"
     fi
 
-    local feedbackupfile="$feedbackupdir/feeds.txt"
-    grep 'fz:feed RDF:about' $feedfile | sed -e 's/^[ \t]*//' | sed 's/<fz:feed RDF:about="//' | sed 's/"$//' | sort -u > $feedbackupfile
-
-    # backup rhythmboxs radio stations
-    local rhythmboxdir="$HOME/.local/share/rhythmbox"
-    local rhythmboxfile="$rhythmboxdir/rhythmdb.xml"
-    local rhythmboxbackupdir="$backupdir$rhythmboxdir"
-    local rhythmboxbackupfile="$backupdir$rhythmboxfile"
-
-    if [ ! -d $rhythmboxbackupdir ]; then
-        mkdir -p $rhythmboxbackupdir
+    if thunderbirdhelper -o > "$feedbackupfile"; then
+        echo "The file '$feedbackupfile' was sucessfully created."
+    else
+        echo "Error while creating the file '$feedbackupfile'."
     fi
+}
 
-    rm $rhythmboxbackupfile
+bclean()
+{
+    printf "Removing diplicates from configfile '%s' ... " "$1"
+    sort -u "$1" | sponge "$1"
+    printf "done.\\n"
+}
 
-    echo '<?xml version="1.0" standalone="yes"?>' >> $rhythmboxbackupfile
-    echo '<rhythmdb version="2.0">' >> $rhythmboxbackupfile
-    xmlstarlet sel -I -t -c '//entry[@type="iradio"]' ~/.local/share/rhythmbox/rhythmdb.xml >> $rhythmboxbackupfile
-    echo '</rhythmdb>' >> $rhythmboxbackupfile
+check_file()
+{
+    if [ ! -f "$1" ]; then
+        if touch "$1"; then
+            "The file '$1' was not found and therefore created."
+        fi
+    fi
+}
+
+check_dir()
+{
+    if [ ! -d "$1" ]; then
+        if mkdir -p "$1"; then
+            echo "The directory '$1' was not found and therefore created."
+        fi
+    fi
 }
 
 if [ $# == 0 ]; then
     usage
 fi
 
-if [ ! -f $configfile ]; then
-    touch $configfile && echo "The configuration file '$configfile' was not found and therefore created."
-fi
+check_file "$backupconfig"
+check_file "$dotfileconfig"
 
-while getopts "lb" opt; do
+check_dir "$backupdir"
+check_dir "$dotfiledir"
+
+while getopts "lbfrtcd" opt; do
     case $opt in
         l)
-            list
+            blist "BACKUP:" "$backupconfig"
+            blist "DOTFILE:" "$dotfileconfig"
         ;;
         b)
-            backup
+            bfiles "$backupdir" "$backupconfig"
+            bfiles "$dotfiledir" "$dotfileconfig" "true"
+        ;;
+        f)
+            bfirefox
+        ;;
+        r)
+            brhythmbox
+        ;;
+        t)
+            bthunderbird
+        ;;
+        c)
+            bclean "$backupconfig"
+            bclean "$dotfileconfig"
+        ;;
+        d)
+            bdiff "BACKUP:" "$backupdir" "$backupconfig"
+            bdiff "DOTFILE:" "$dotfiledir" "$dotfileconfig" "true"
         ;;
         \?)
             usage

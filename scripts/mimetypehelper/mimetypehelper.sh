@@ -1,7 +1,7 @@
 #!/bin/bash
 
-EXCLUDES=( .git target )
-DESKTOPPATH="/usr/share/applications"
+excludes=( .git target )
+desktoppath="/usr/share/applications"
 
 usage()
 {
@@ -10,54 +10,61 @@ usage()
     echo "Usage: $0 [Options]"
     echo
     echo "Options:"
-    printf "  %-20s %s\n" "-s [PATH]" "scan recursive for mimetypes in the given path"
-    printf "  %-20s %s\n" "-c" "change mimetype"
-    printf "  %-20s %s\n" "-v [MIME]" "view default application for mimetype"
-    printf "  %-20s %s\n" "-f [NAME]" "find application desktop file"
+    printf "  %-20s %s\\n" "-s [PATH]" "scan recursive for mimetypes in the given path"
+    printf "  %-20s %s\\n" "-m [MIME]" "view default application for mimetype"
+    printf "  %-20s %s\\n" "-f [FILENAME]" "view mimetype for the given filename"
+    printf "  %-20s %s\\n" "-a [NAME]" "find application desktop file"
+    printf "  %-20s %s\\n" "-c" "change mimetype"
     exit 1
 }
 
-exclude()
+isexcluded()
 {
-    RET=0
-    for EXCLUDE in "${EXCLUDES[@]}"; do
-        if [[ $1 =~ $EXCLUDE ]]; then
-            RET=1
+    local ret=0
+    local exclude
+    for exclude in "${excludes[@]}"; do
+        if [[ $1 =~ $exclude ]]; then
+            ret=1
             break;
         fi
     done
-    echo $RET
+    echo $ret
 }
 
 scan()
 {
-    if [ ! -d $1 ]; then
+    if [ ! -d "$1" ]; then
         echo "The given path '$1' doesn't exist!"
         exit 1
     fi
 
-    find $1 -type f | while read FPATH; do
-        CHECK=$(exclude "$FPATH")
-        if [ $CHECK -eq 0 ]; then
-            FBASE=$(basename "$FPATH")
-            FEXTN=${FBASE##*.}
-            FMIME=$(xdg-mime query filetype "$FPATH")
-            FDFLT=$(xdg-mime query default "$FMIME")
-            printf "%-30s %-30s %s\n" "$FEXTN" "$FMIME" "$FDFLT"
+    local check
+    local fpath
+    find "$1" -type f | while read -r fpath; do
+        check=$(isexcluded "$fpath")
+        if [ "$check" -eq "0" ]; then
+            fbase=$(basename "$fpath")
+            fextn=${fbase##*.}
+            fmime=$(xdg-mime query filetype "$fpath")
+            fdflt=$(xdg-mime query default "$fmime")
+            printf "%-15s %-85s %s\\n" "$fextn" "$fmime" "$fdflt"
         fi
     done | sort -u -k 1
 }
 
 change()
 {
-    read -p "Mimetype: " MIME
-    read -p "Desktopfilename: " NAME
+    local mime
+    local name
+    local rslt
 
-    xdg-mime default $NAME $MIME
-    if [ $? -eq 0 ]; then
-        RSLT=$(xdg-mime query default $MIME)
-        if [ "$RSLT" == "$NAME" ]; then
-            echo "The mimetype for '$MIME' was changed to '$NAME'."
+    read -rp "Mimetype: " mime
+    read -rp "Desktopfilename: " name
+
+    if xdg-mime default "$name" "$mime"; then
+        rslt=$(xdg-mime query default "$mime")
+        if [ "$rslt" == "$name" ]; then
+            echo "The mimetype for '$mime' was changed to '$name'."
         else
             echo "Error while changing the mimetype."
             exit 1
@@ -66,37 +73,45 @@ change()
         echo "Error while changing the mimetype."
         exit 1
     fi
-
-
 }
 
 findapp()
 {
-    find $DESKTOPPATH -iname "*$1*" | while read FPATH; do
-        FBASE=$(basename "$FPATH")
-        printf "%s\n" "$FBASE"
+    local fbase
+    local fpath
+    find $desktoppath -iname "*$1*" | while read -r fpath; do
+        fbase=$(basename "$fpath")
+        printf "%s\\n" "$fbase"
     done
 }
 
-show()
+defaultapp()
 {
-    xdg-mime query default $1
+    xdg-mime query default "$1"
+}
+
+mimetype()
+{
+    xdg-mime query filetype "$1"
 }
 
 if [ $# == 0 ]; then
     usage
 fi
 
-while getopts "s:f:cv" OPT; do
-    case $OPT in
+while getopts "a:s:f:m:c" opt; do
+    case $opt in
     s)
-        scan $OPTARG
+        scan "$OPTARG"
+        ;;
+    a)
+        findapp "$OPTARG"
+        ;;
+    m)
+        defaultapp "$OPTARG"
         ;;
     f)
-        findapp $OPTARG
-        ;;
-    v)
-        show $OPTARG
+        mimetype "$OPTARG"
         ;;
     c)
         change
