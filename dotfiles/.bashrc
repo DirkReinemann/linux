@@ -5,7 +5,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-parse_git_branch () 
+parse_git_branch()
 {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/'
 }
@@ -31,7 +31,7 @@ alias egrep='egrep --color=auto'
 alias l='ls -alih --color=auto'
 alias o='xdg-open'
 alias upd='sudo pacman -Syu'
-alias upg='yaourt -Syu --aur'
+alias upg='pacaur -u --aur'
 alias ins='sudo pacman -S'
 alias rem='sudo pacman -Rsn'
 alias comt='tar -cjvf'
@@ -54,6 +54,10 @@ alias bananapizuendstoff='ssh -vL 9000:localhost:9000 bananapilocal'
 alias odroidmusicmixsync='rsync -avz --delete --progress -e ssh /home/dirk/Music/Mix/ odroid:/home/alarm/Music/Music2/Mix/'
 alias odroidmusicdiversesync='rsync -avz --delete --progress -e ssh /home/dirk/Music/Diverse/ odroid:/home/alarm/Music/Music2/Diverse/'
 alias odroidmusicdrumnbasssync='rsync -avz --delete --progress -e ssh /home/dirk/Music/DrumNBass/ odroid:/home/alarm/Music/Music2/DrumNBass/'
+alias odroidvncserver='ssh -t -L 5900:localhost:5900 odroid "x11vnc -display :0 -auth /home/alarm/.Xauthority"'
+alias odroidvncclient='gvncviewer localhost'
+alias odroidmount='sshfs odroid:/home/alarm /mnt/odroid -o follow_symlinks'
+alias odroidumount='fusermount3 -u /mnt/odroid'
 alias raspberrypimusicmixsync='rsync -avz --delete --progress -e ssh /home/dirk/Music/Mix/ raspberrypi:/home/alarm/Music/'
 alias publicip='printf "$(curl -s http://ipecho.net/plain)\n"'
 alias pinggoogle='ping 8.8.8.8'
@@ -63,8 +67,6 @@ alias streamffserver='ffserver -f $HOME/.config/ffserver.conf'
 alias streamffmpeg='ffmpeg -f pulse -i default http://127.0.0.1:9001/feed.ffm'
 alias onetimefullload='sudo tlp fullcharge BAT0'
 alias srm='sudo rm'
-alias odroidvncserver='ssh -t -L 5900:localhost:5900 odroid "x11vnc -display :0 -auth /home/alarm/.Xauthority"'
-alias odroidvncclient='gvncviewer localhost'
 alias ct='ctags --fields=+KSn -R .'
 alias permissionsdir='find . -type d -print0 | xargs -0 chmod 755'
 alias permissionsfile='find . -type f -print0 | xargs -0 chmod 644'
@@ -91,7 +93,7 @@ grepall()
     if [ $# -ne 1 ]; then
         echo "Usage: grepall [TERM]"
     else
-        grep -ri "$1" *
+        grep -ri "$1" "*"
     fi
 }
 
@@ -107,12 +109,12 @@ findall()
 copyisotodrive()
 {
     if [ $# -ne 2 ]; then
-        printf "Usage: copyisotodrive [ISO] [DRIVE]\n"
+        printf "Usage: copyisotodrive [ISO] [DRIVE]\\n"
     else
         if [ -f "$1" ] && [ -b "$2" ]; then
             sudo dd if="$1" of="$2" status=progress && sync
         else
-            printf "Either the given file doesn't exist or the drive is not available.\n"
+            printf "Either the given file doesn't exist or the drive is not available.\\n"
         fi
     fi
 }
@@ -120,7 +122,7 @@ copyisotodrive()
 runusbquemu()
 {
     if [ $# -ne 1 ]; then
-        printf "Usage: runusbqemu [USB]\n"
+        printf "Usage: runusbqemu [USB]\\n"
     else
         if [ -b "$1" ]; then
             sudo qemu-system-x86_64 -m 4096 -enable-kvm -hda "$1"
