@@ -87,12 +87,26 @@ findapp()
 
 defaultapp()
 {
-    xdg-mime query default "$1"
+    local mime default
+
+    mime="$1"
+    default=$(xdg-mime query default "$mime")
+
+    printf "%-20s %-s\\n" "mimetype" "$mime"
+    printf "%-20s %-s\\n" "application" "$default"
 }
 
 mimetype()
 {
-    xdg-mime query filetype "$1"
+    local mime default filename
+
+    filename="$1"
+    mime=$(xdg-mime query filetype "$filename" 2>/dev/null)
+    default=$(xdg-mime query default "$mime" 2>/dev/null)
+
+    printf "%-20s %-s\\n" "filename" "$filename"
+    printf "%-20s %-s\\n" "mimetype" "$mime"
+    printf "%-20s %-s\\n" "application" "$default"
 }
 
 if [ $# == 0 ]; then
