@@ -94,7 +94,7 @@ grepall()
     if [ $# -ne 1 ]; then
         echo "Usage: grepall [TERM]"
     else
-        grep -ri "$1" "*"
+        grep -ri "$1" *
     fi
 }
 
