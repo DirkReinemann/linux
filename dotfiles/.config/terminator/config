@@ -11,12 +11,47 @@
   go_up = <Primary>Up
 [layouts]
   [[default]]
-    [[[child1]]]
-      parent = window0
-      type = Terminal
-    [[[window0]]]
+    [[[child0]]]
+      fullscreen = False
+      last_active_term = 7f3ea40e-7b9f-41aa-af50-c52fb4cd6922
+      last_active_window = True
+      maximised = False
+      order = 0
       parent = ""
+      position = 0:37
+      size = 796, 842
+      title = /bin/bash
       type = Window
+    [[[child1]]]
+      order = 0
+      parent = child0
+      position = 452
+      ratio = 0.571428571429
+      type = HPaned
+    [[[child3]]]
+      order = 1
+      parent = child1
+      position = 419
+      ratio = 0.500597371565
+      type = VPaned
+    [[[terminal2]]]
+      order = 0
+      parent = child1
+      profile = default
+      type = Terminal
+      uuid = 7f3ea40e-7b9f-41aa-af50-c52fb4cd6922
+    [[[terminal4]]]
+      order = 0
+      parent = child3
+      profile = default
+      type = Terminal
+      uuid = 7712dbcf-bf19-4355-8d5d-c5f339845e14
+    [[[terminal5]]]
+      order = 1
+      parent = child3
+      profile = default
+      type = Terminal
+      uuid = 680e5019-d326-44ef-9645-6fd92a8422b8
 [plugins]
 [profiles]
   [[default]]
