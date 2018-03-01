@@ -28,6 +28,7 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'scrooloose/syntastic'
 Plugin 'valloric/listtoggle'
+Plugin 'will133/vim-dirdiff'
 " Plugin 'ervandew/supertab'
 " Plugin 'rip-rip/clang_complete'
 
