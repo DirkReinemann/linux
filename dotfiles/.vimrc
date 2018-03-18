@@ -29,6 +29,8 @@ Plugin 'honza/vim-snippets'
 Plugin 'scrooloose/syntastic'
 Plugin 'valloric/listtoggle'
 Plugin 'will133/vim-dirdiff'
+Plugin 'raimondi/delimitmate'
+Plugin 'yggdroot/indentline'
 " Plugin 'ervandew/supertab'
 " Plugin 'rip-rip/clang_complete'
 
@@ -122,6 +124,8 @@ nnoremap <leader>o :CtrlP<cr>
 nnoremap <leader>p :CtrlPTag<cr>
 nnoremap <leader>t <C-]>
 nnoremap <leader>z <C-t>
+nnoremap <leader>n ]c
+nnoremap <leader>b [c
 nnoremap <F8> :TagbarToggle<cr>
 nnoremap <F2> :NERDTreeToggle<cr>
 " save file which you forgot to open with sudo
