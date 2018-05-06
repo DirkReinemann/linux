@@ -13,45 +13,81 @@
   [[default]]
     [[[child0]]]
       fullscreen = False
-      last_active_term = 7f3ea40e-7b9f-41aa-af50-c52fb4cd6922
       last_active_window = True
       maximised = False
       order = 0
       parent = ""
       position = 0:37
-      size = 796, 842
+      size = 836, 992
       title = /bin/bash
       type = Window
     [[[child1]]]
+      active_page = 1
+      labels = None, None
+      last_active_term = 7f3ea40e-7b9f-41aa-af50-c52fb4cd6922, 4165ffb1-e4f0-479c-906d-a8419e928504
       order = 0
       parent = child0
-      position = 452
-      ratio = 0.571428571429
-      type = HPaned
-    [[[child3]]]
-      order = 1
-      parent = child1
-      position = 419
-      ratio = 0.500597371565
-      type = VPaned
-    [[[terminal2]]]
+      type = Notebook
+    [[[child2]]]
       order = 0
       parent = child1
+      position = 475
+      ratio = 0.572979493366
+      type = HPaned
+    [[[child4]]]
+      order = 1
+      parent = child2
+      position = 475
+      ratio = 0.501054852321
+      type = VPaned
+    [[[child7]]]
+      order = 1
+      parent = child1
+      position = 724
+      ratio = 0.763713080169
+      type = VPaned
+    [[[child9]]]
+      order = 1
+      parent = child7
+      position = 416
+      ratio = 0.501809408926
+      type = HPaned
+    [[[terminal10]]]
+      order = 0
+      parent = child9
+      profile = default
+      type = Terminal
+      uuid = ead782bf-5c94-4e08-931e-55da598ae56d
+    [[[terminal11]]]
+      order = 1
+      parent = child9
+      profile = default
+      type = Terminal
+      uuid = df8f0b6e-b803-4125-abd0-183dc18f0bd4
+    [[[terminal3]]]
+      order = 0
+      parent = child2
       profile = default
       type = Terminal
       uuid = 7f3ea40e-7b9f-41aa-af50-c52fb4cd6922
-    [[[terminal4]]]
+    [[[terminal5]]]
       order = 0
-      parent = child3
+      parent = child4
       profile = default
       type = Terminal
       uuid = 7712dbcf-bf19-4355-8d5d-c5f339845e14
-    [[[terminal5]]]
+    [[[terminal6]]]
       order = 1
-      parent = child3
+      parent = child4
       profile = default
       type = Terminal
       uuid = 680e5019-d326-44ef-9645-6fd92a8422b8
+    [[[terminal8]]]
+      order = 0
+      parent = child7
+      profile = default
+      type = Terminal
+      uuid = 4165ffb1-e4f0-479c-906d-a8419e928504
 [plugins]
 [profiles]
   [[default]]

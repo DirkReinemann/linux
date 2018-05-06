@@ -18,7 +18,6 @@ Plugin 'majutsushi/tagbar'
 Plugin 'godlygeek/tabular'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'rust-lang/rust.vim'
-Plugin 'xolox/vim-easytags'
 Plugin 'xolox/vim-misc'
 Plugin 'henrik/vim-indexed-search'
 Plugin 'tpope/vim-commentary' 
@@ -30,7 +29,11 @@ Plugin 'scrooloose/syntastic'
 Plugin 'valloric/listtoggle'
 Plugin 'will133/vim-dirdiff'
 Plugin 'raimondi/delimitmate'
+Plugin 'chase/vim-ansible-yaml'
+Plugin 'gre/play2vim'
+Plugin 'othree/html5.vim'
 Plugin 'yggdroot/indentline'
+
 " Plugin 'ervandew/supertab'
 " Plugin 'rip-rip/clang_complete'
 
@@ -103,9 +106,11 @@ let mapleader=","
 let g:mapleader=","
 
 function! UpdateCTags()
-   if filereadable("tags")
-       call system("ctags -R  --fields=+l ".expand("%")) " --field=+l is needed by ycm (ycm_collect_identifiers_from_tags_files)
-   endif
+    if filereadable("tags")
+        let current_path = getcwd()
+        call system("ctags -R --fields=+l " . current_path) " --field=+l is needed by ycm (ycm_collect_identifiers_from_tags_files)
+        unlet current_path
+    endif
 endfunction
 
 " update tags
@@ -147,7 +152,7 @@ set backspace=eol,start,indent
 " completion menu configuration
 set concealcursor=vin
 set conceallevel=2
-set completeopt=menu,menuone
+set completeopt=menu,menuone,preview
 
 " statusline configuration
 set statusline+=%#warningmsg#
@@ -170,6 +175,7 @@ let g:syntastic_mode_map = { 'passive_filetypes': ['c', 'cpp'] }
 let g:ycm_server_python_interpreter="/usr/bin/python2"
 let g:ycm_global_ycm_extra_conf="~/.vim/.ycm_extra_conf.py"
 let g:ycm_collect_identifiers_from_tags_files=1
+let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_always_populate_location_list=1
 let g:ycm_key_list_select_completion=['<down>']
 let g:ycm_key_list_previous_completion=['<up>']
@@ -196,4 +202,3 @@ let g:UltiSnipsJumpBackwardTrigger="<leader>b"
 
 " supertab configuration
 " let g:SuperTabDefaultCompletionType="context"
-
