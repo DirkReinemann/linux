@@ -33,6 +33,7 @@ Plugin 'chase/vim-ansible-yaml'
 Plugin 'gre/play2vim'
 Plugin 'othree/html5.vim'
 Plugin 'yggdroot/indentline'
+Plugin 'ensime/ensime-vim'
 
 " Plugin 'ervandew/supertab'
 " Plugin 'rip-rip/clang_complete'
