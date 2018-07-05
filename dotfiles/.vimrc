@@ -191,6 +191,17 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<leader>n"
 let g:UltiSnipsJumpBackwardTrigger="<leader>b"
 
+" lightline configuration
+let g:lightline = {
+      \ 'component_function': {
+      \   'filename': 'LightLineFilename'
+      \ }
+      \ }
+
+function! LightLineFilename()
+  return expand('%')
+endfunction
+
 " clang-complete configuration
 " let g:clang_library_path='/usr/lib/libclang.so'
 " let g:clang_auto_select=0
