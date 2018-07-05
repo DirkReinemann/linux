@@ -55,11 +55,10 @@ pacmancache()
 
 unusedpackages()
 {
-    local packages=""
-    packages="$(pacman -Qtdq)"
-    if [ ! -z "$packages" ]; then
-        sudo pacman -Rns --noconfirm "$packages"
-    fi
+    local packages=( $(pacman -Qtdq | tr '\n' ' ') )
+    for package in "${packages[@]}"; do
+        sudo pacman -Rns --noconfirm "$package"
+    done
 }
 
 if [ $# == 0 ]; then
