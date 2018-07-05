@@ -193,13 +193,23 @@ let g:UltiSnipsJumpBackwardTrigger="<leader>b"
 
 " lightline configuration
 let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
       \ 'component_function': {
-      \   'filename': 'LightLineFilename'
+      \   'filename': 'LightLineFilename',
+      \   'gitbranch': 'fugitive#head'
       \ }
       \ }
 
 function! LightLineFilename()
-  return expand('%')
+    let filename = expand('%')
+    if filename == ''
+        return '[No Name]'
+    else
+        return filename
+    endif
 endfunction
 
 " clang-complete configuration
