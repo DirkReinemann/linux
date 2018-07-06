@@ -1,6 +1,6 @@
 #!/bin/bash
 
-workdir="$HOME"
+workdir="$(pwd)"
 editor="vi"
 filename=""
 excludes=( ".git" "target" ".idea" )
@@ -13,7 +13,7 @@ usage()
     echo "Usage: $0 [Options] [Filename]"
     echo
     echo "Options:"
-    printf "  %-20s %s\\n" "-d" "the directory to search in (default=$HOME)"
+    printf "  %-20s %s\\n" "-d" "the directory to search in (default is the current directory)"
     exit 1
 }
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-workdir="$HOME"
+workdir="$(pwd)"
 dirname=""
 excludes=( ".git" "target" ".idea" )
 maxdirs="20"
@@ -12,7 +12,7 @@ usage()
     echo "Usage: $0 [Options] [Directory]"
     echo
     echo "Options:"
-    printf "  %-20s %s\\n" "-d" "the directory to search in (default=$HOME)"
+    printf "  %-20s %s\\n" "-d" "the directory to search in (default is the current directory)"
     exit 1
 }
 
