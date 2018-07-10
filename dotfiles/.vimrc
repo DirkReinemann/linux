@@ -191,6 +191,27 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<leader>n"
 let g:UltiSnipsJumpBackwardTrigger="<leader>b"
 
+" lightline configuration
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'filename': 'LightLineFilename',
+      \   'gitbranch': 'fugitive#head'
+      \ }
+      \ }
+
+function! LightLineFilename()
+    let filename = expand('%')
+    if filename == ''
+        return '[No Name]'
+    else
+        return filename
+    endif
+endfunction
+
 " clang-complete configuration
 " let g:clang_library_path='/usr/lib/libclang.so'
 " let g:clang_auto_select=0
