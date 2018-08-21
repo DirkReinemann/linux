@@ -29,6 +29,6 @@ fi
 NAME=$(basename $1)
 OUTFILE="$OUTDIR/$NAME.html"
 
-pandoc -f markdown -t html -o $OUTFILE -s $1 && firefox --new-tab $OUTFILE
+pandoc -f markdown -t html -o $OUTFILE -s $1 --metadata title="$NAME" && firefox --new-tab $OUTFILE
 
 exit 0

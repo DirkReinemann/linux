@@ -1,7 +1,7 @@
 #!/bin/bash
 
 patterns=( ".*~" ".*.swp" ".*\.log.[0-9]{1}" ".*\.[0-9]{1}.log.old" ".*\.[0-9]{1}.gz" ".*\.old" ".*_history" )
-path="."
+path="$(pwd)"
 ask=0
 
 usage()
@@ -66,7 +66,7 @@ while getopts "dsap:" opt; do
     esac
 done
 
-if [ -d $path ]; then
+if [ ! -d $path ]; then
     "The given path '$path' doesn't exist."
     exit 2
 fi
