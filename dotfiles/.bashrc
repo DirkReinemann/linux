@@ -44,7 +44,7 @@ alias devices='sudo fdisk -l'
 alias diskusage='sudo du -hsx * | sort -rh | head -10'
 alias openconn='sudo netstat -tupan'
 alias aliases='grep ^alias ~/.bashrc'
-alias youtubedl='youtube-dl -x --audio-format mp3 --audio-quality 0'
+alias youtubedl='youtube-dl -x -c --audio-format mp3 --audio-quality 0 -o "%(title)s.%(ext)s"'
 alias ethupmac='sudo macchanger -r enp0s25 && sudo dhcpcd enp0s25'
 alias ethup='sudo dhcpcd enp0s25'
 alias ethdown='sudo killall dhcpcd && sudo macchanger -p enp0s25 && sudo ip addr flush dev enp0s25 && ip link set enp0s25 down'
@@ -95,16 +95,30 @@ grepall()
     if [ $# -ne 1 ]; then
         echo "Usage: grepall [TERM]"
     else
-        grep -ri "$1" *
+        grep -ri "$1"
     fi
 }
 
 findall()
 {
-    if [ $# -ne 2 ]; then
-        echo "Usage: findall [PATH] [TERM]"
+    if [ $# -ne 1 ]; then
+        echo "Usage: findall [TERM]"
     else
-        find "$1" -iname "*$2*"
+        find "$(pwd)" -iname "*$1*"
+    fi
+}
+
+catall()
+{
+    if [ $# -ne 1 ]; then
+        echo "Usage: catall [TERM]"
+    else
+        find "$(pwd)" -type f -iname "*$1*" | \
+            while read -r filename; do 
+                awk -v name="$(basename "$filename")" \
+                    'NR==1 { printf "%-30s %s\n", name, $0 } NR>1 { printf "%-30s %s\n", "", $0 }' \
+                    "$filename"
+            done
     fi
 }
 
@@ -151,8 +165,7 @@ startappnohup()
     if [ $# -lt 1 ]; then
         echo "Usage: startappnohup [APPLICATION] [PARAMETERS]"
     else
-        hash "$1" > /dev/null 2>&1
-        if [ $? -eq 0 ]; then
+        if hash "$1" > /dev/null 2>&1; then
             DATEFORMAT=$(date +%Y-%m-%d-%H-%m-%S-%N)
             LOGFILE="/tmp/$1-$DATEFORMAT.log"
             nohup "$1" "$2" > "$LOGFILE" 2>&1 &
