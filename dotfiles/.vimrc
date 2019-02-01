@@ -8,8 +8,6 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree.git'
-Plugin 'tpope/vim-markdown'
-Plugin 'derekwyatt/vim-scala'
 Plugin 'itchyny/lightline.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
@@ -17,7 +15,6 @@ Plugin 'tpope/vim-surround'
 Plugin 'majutsushi/tagbar'
 Plugin 'godlygeek/tabular'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'rust-lang/rust.vim'
 Plugin 'xolox/vim-misc'
 Plugin 'henrik/vim-indexed-search'
 Plugin 'tpope/vim-commentary' 
@@ -29,14 +26,11 @@ Plugin 'scrooloose/syntastic'
 Plugin 'valloric/listtoggle'
 Plugin 'will133/vim-dirdiff'
 Plugin 'raimondi/delimitmate'
-Plugin 'chase/vim-ansible-yaml'
 Plugin 'gre/play2vim'
-Plugin 'othree/html5.vim'
 Plugin 'yggdroot/indentline'
 Plugin 'ensime/ensime-vim'
-
-" Plugin 'ervandew/supertab'
-" Plugin 'rip-rip/clang_complete'
+Plugin 'jamshedvesuna/vim-markdown-preview'
+Plugin 'sheerun/vim-polyglot'
 
 call vundle#end()
 filetype plugin indent on
@@ -93,7 +87,6 @@ set showcmd
 
 " show relative numbers on the left side
 set number
-
 if exists("&relativenumber")
     set relativenumber
     au BufReadPost * set relativenumber
@@ -124,6 +117,7 @@ autocmd FileChangedShellPost * echohl WarningMsg | echo "File changed on disk. B
 " autocmd BufWritePost .vimrc source %
 
 nnoremap <leader>w :wincmd w<cr>
+nnoremap <leader>e :tabNext<cr>
 nnoremap <leader>s :w!<cr>
 nnoremap <leader>q :q!<cr>
 nnoremap <leader>o :CtrlP<cr>
@@ -140,19 +134,14 @@ cnoremap w!! w !sudo tee % >/dev/null
 nnoremap <esc> :noh<return><esc>
 nnoremap <esc>^[ <esc>^[
 " select entry from completion menu on enter
-" inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-" nnoremap <leader>h :wincmd h<cr>
-" nnoremap <leader>j :wincmd j<cr>
-" nnoremap <leader>k :wincmd k<cr>
-" nnoremap <leader>l :wincmd l<cr>
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " better backspace
 set backspace=eol,start,indent
 
 " completion menu configuration
-set concealcursor=vin
-set conceallevel=2
+set concealcursor=n
+set conceallevel=0
 set completeopt=menu,menuone,preview
 
 " statusline configuration
@@ -211,6 +200,18 @@ function! LightLineFilename()
         return filename
     endif
 endfunction
+
+" markdown configuration
+let vim_markdown_preview_browser='firefox'
+let vim_markdown_preview_use_xdg_open=1
+let vim_markdown_preview_github=1
+
+let g:vim_markdown_toc_autofit=1
+let g:vim_markdown_conceal=0
+let g:vim_markdown_folding_disabled=1
+
+" indentline configuration
+let g:indentLine_setConceal=0
 
 " clang-complete configuration
 " let g:clang_library_path='/usr/lib/libclang.so'
