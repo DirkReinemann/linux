@@ -28,6 +28,7 @@ PLUGINS = [
 ]
 
 DOTFILES = [
+    '.bash_profile',
     '.bashrc',
     '.vimrc',
     '.tmux.conf'
