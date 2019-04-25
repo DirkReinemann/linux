@@ -18,7 +18,7 @@ PLUGINS = [
     ("tabular", "https://github.com/godlygeek/tabular.git"),
     ("vim-commentary", "https://github.com/tpope/vim-commentary.git"),
     ("vim-dirdiff", "https://github.com/will133/vim-dirdiff.git"),
-    ("vim-fugitive", "httpws://github.com/tpope/vim-fugitive.git"),
+    ("vim-fugitive", "https://github.com/tpope/vim-fugitive.git"),
     ("vim-gitgutter", "https://github.com/airblade/vim-gitgutter.git"),
     ("vim-indexed-search", "https://github.com/henrik/vim-indexed-search.git"),
     ("vim-misc", "https://github.com/xolox/vim-misc.git"),
