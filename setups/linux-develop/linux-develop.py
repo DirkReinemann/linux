@@ -35,13 +35,18 @@ DOTFILES = [
 
 FORMATTER = logging.Formatter('%(message)s')
 
+FILE_HANDLER = logging.FileHandler('linux-develop.log')
+FILE_HANDLER.setLevel(logging.INFO)
+FILE_HANDLER.setFormatter(FORMATTER)
+
 STREAM_HANDLER = logging.StreamHandler()
-STREAM_HANDLER.setLevel(logging.DEBUG)
+STREAM_HANDLER.setLevel(logging.INFO)
 STREAM_HANDLER.setFormatter(FORMATTER)
 
 LOGGER = logging.getLogger()
 LOGGER.setLevel(logging.INFO)
 LOGGER.addHandler(STREAM_HANDLER)
+LOGGER.addHandler(FILE_HANDLER)
 
 def read_username():
     username = ""
@@ -195,9 +200,8 @@ def main():
     (options, arguments) = parser.parse_args()
 
     if options.install:
-        install_packages()
-        # copy_dotfiles(options.user)
-        # install_vim(options.user)
+        copy_dotfiles(options.user)
+        install_vim(options.user)
 
     if options.uninstall:
         uninstall_vim(options.user)
