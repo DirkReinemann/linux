@@ -31,6 +31,7 @@ Plugin 'yggdroot/indentline'
 Plugin 'ensime/ensime-vim'
 Plugin 'jamshedvesuna/vim-markdown-preview'
 Plugin 'sheerun/vim-polyglot'
+Plugin 'flazz/vim-colorschemes'
 
 call vundle#end()
 filetype plugin indent on
@@ -107,8 +108,9 @@ function! UpdateCTags()
     endif
 endfunction
 
+autocmd BufWritePost * :redraw!
 " update tags
-autocmd BufWritePost * call UpdateCTags()
+" autocmd BufWritePost * call UpdateCTags()
 " automatic reload file when changed outside of vim
 autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
 autocmd FileChangedShellPost * echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
@@ -118,7 +120,7 @@ autocmd FileChangedShellPost * echohl WarningMsg | echo "File changed on disk. B
 
 nnoremap <leader>w :wincmd w<cr>
 nnoremap <leader>e :tabNext<cr>
-nnoremap <leader>s :w!<cr>
+nnoremap <leader>s :w!<cr>:redraw!<cr>
 nnoremap <leader>q :q!<cr>
 nnoremap <leader>o :CtrlP<cr>
 nnoremap <leader>p :CtrlPTag<cr>
@@ -212,6 +214,9 @@ let g:vim_markdown_folding_disabled=1
 
 " indentline configuration
 let g:indentLine_setConceal=0
+
+" ansible yaml configuratoin
+let g:ansible_unindent_after_newline=1
 
 " clang-complete configuration
 " let g:clang_library_path='/usr/lib/libclang.so'

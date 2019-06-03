@@ -1,5 +1,6 @@
 [global_config]
   always_split_with_profile = True
+  suppress_multiple_term_dialog = True
   title_inactive_bg_color = "#353945"
   title_inactive_fg_color = "#ffffff"
   title_receive_bg_color = "#4084d6"
@@ -13,81 +14,45 @@
   [[default]]
     [[[child0]]]
       fullscreen = False
+      last_active_term = 4165ffb1-e4f0-479c-906d-a8419e928504
       last_active_window = True
       maximised = False
       order = 0
       parent = ""
       position = 0:37
-      size = 836, 992
+      size = 796, 842
       title = /bin/bash
       type = Window
     [[[child1]]]
-      active_page = 1
-      labels = None, None
-      last_active_term = 7f3ea40e-7b9f-41aa-af50-c52fb4cd6922, 4165ffb1-e4f0-479c-906d-a8419e928504
       order = 0
       parent = child0
-      type = Notebook
-    [[[child2]]]
-      order = 0
-      parent = child1
-      position = 475
-      ratio = 0.572979493366
-      type = HPaned
-    [[[child4]]]
-      order = 1
-      parent = child2
-      position = 475
-      ratio = 0.501054852321
+      position = 639
+      ratio = 0.763440860215
       type = VPaned
-    [[[child7]]]
+    [[[child3]]]
       order = 1
       parent = child1
-      position = 724
-      ratio = 0.763713080169
-      type = VPaned
-    [[[child9]]]
-      order = 1
-      parent = child7
-      position = 416
-      ratio = 0.501809408926
+      position = 398
+      ratio = 0.503160556258
       type = HPaned
-    [[[terminal10]]]
+    [[[terminal2]]]
       order = 0
-      parent = child9
-      profile = default
-      type = Terminal
-      uuid = ead782bf-5c94-4e08-931e-55da598ae56d
-    [[[terminal11]]]
-      order = 1
-      parent = child9
-      profile = default
-      type = Terminal
-      uuid = df8f0b6e-b803-4125-abd0-183dc18f0bd4
-    [[[terminal3]]]
-      order = 0
-      parent = child2
-      profile = default
-      type = Terminal
-      uuid = 7f3ea40e-7b9f-41aa-af50-c52fb4cd6922
-    [[[terminal5]]]
-      order = 0
-      parent = child4
-      profile = default
-      type = Terminal
-      uuid = 7712dbcf-bf19-4355-8d5d-c5f339845e14
-    [[[terminal6]]]
-      order = 1
-      parent = child4
-      profile = default
-      type = Terminal
-      uuid = 680e5019-d326-44ef-9645-6fd92a8422b8
-    [[[terminal8]]]
-      order = 0
-      parent = child7
+      parent = child1
       profile = default
       type = Terminal
       uuid = 4165ffb1-e4f0-479c-906d-a8419e928504
+    [[[terminal4]]]
+      order = 0
+      parent = child3
+      profile = default
+      type = Terminal
+      uuid = ead782bf-5c94-4e08-931e-55da598ae56d
+    [[[terminal5]]]
+      order = 1
+      parent = child3
+      profile = default
+      type = Terminal
+      uuid = df8f0b6e-b803-4125-abd0-183dc18f0bd4
 [plugins]
 [profiles]
   [[default]]
@@ -97,3 +62,13 @@
     foreground_color = "#ffffff"
     scrollback_lines = 10000
     use_system_font = False
+  [[solarized-dark]]
+    palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#586e75:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
+    foreground_color = "#eee8d5"
+    background_color = "#002b36"
+    cursor_color = "#eee8d5"
+  [[solarized-light]]
+    palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
+    background_color = "#eee8d5"
+    foreground_color = "#002b36"
+    cursor_color = "#002b36"
