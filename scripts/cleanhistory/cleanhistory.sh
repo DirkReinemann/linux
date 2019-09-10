@@ -62,9 +62,9 @@ unusedpackages()
     done
 }
 
-dockercache()
+cleandocker()
 {
-    docker system prune
+    sudo docker system prune
 }
 
 if [ $# == 0 ]; then
@@ -75,7 +75,7 @@ if [ ! -f $configfile ]; then
     touch $configfile && echo "The configuration file '$configfile' was not found and therefore created."
 fi
 
-while getopts "cljpto" opt; do
+while getopts "cljptod" opt; do
     case $opt in
         c)
             cleanfiles
@@ -96,7 +96,7 @@ while getopts "cljpto" opt; do
             unusedpackages
         ;;
         d)
-            dockerclean
+            cleandocker
         ;;
         \?)
             usage
