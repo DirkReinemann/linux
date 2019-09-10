@@ -15,6 +15,7 @@ usage()
     printf "  %-20s %s\\n" "-l" "list history files"
     printf "  %-20s %s\\n" "-t" "test history files"
     printf "  %-20s %s\\n" "-o" "remove unused pacman packages"
+    printf "  %-20s %s\\n" "-d" "clean docker cache"
     exit 1
 }
 
@@ -61,6 +62,11 @@ unusedpackages()
     done
 }
 
+dockercache()
+{
+    docker system prune
+}
+
 if [ $# == 0 ]; then
     usage
 fi
@@ -88,6 +94,9 @@ while getopts "cljpto" opt; do
         ;;
         o)
             unusedpackages
+        ;;
+        d)
+            dockerclean
         ;;
         \?)
             usage
